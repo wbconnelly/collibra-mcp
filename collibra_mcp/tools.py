@@ -6,7 +6,7 @@ import os
 import base64
 
 # Module-level configuration - available to all functions
-COLLIBRA_BASE_URL = 'https://wconnellycollibracloud.collibra.com/rest/2.0'
+COLLIBRA_BASE_URL = os.getenv('COLLIBRA_API_URL', 'https://<YOUR COLLIBRA INSTANCE>/rest/2.0')
 USERNAME = os.getenv('COLLIBRA_ADMIN_USN')
 PASSWORD = os.getenv('COLLIBRA_ADMIN_PW')
 
