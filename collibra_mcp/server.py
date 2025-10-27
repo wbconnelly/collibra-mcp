@@ -151,6 +151,18 @@ def assign_steward(
     logger.info(f"Successfully assigned steward")
     return str(result)
 
+@mcp.tool()
+def get_role_id(
+    role_name: Annotated[str, "The name of the role to search for"]
+) -> str:
+    """
+    Retrieves the role ID from Collibra by name.
+    """
+    logger.info(f"Retrieving role ID for {role_name}")
+    result = tools.get_role_id(role_name)
+    logger.info(f"Successfully retrieved role ID")
+    return str(result)
+    
 def run_server():
     """Run the MCP server."""
     logger.info("Starting Collibra MCP server...")

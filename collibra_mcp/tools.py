@@ -6,7 +6,7 @@ import os
 import base64
 
 # Module-level configuration - available to all functions
-COLLIBRA_BASE_URL = os.getenv('COLLIBRA_API_URL', 'https://<YOUR COLLIBRA INSTANCE>/rest/2.0')
+COLLIBRA_BASE_URL = 'https://<YOUR COLLIBRA INSTANCE>/rest/2.0'
 USERNAME = os.getenv('COLLIBRA_ADMIN_USN')
 PASSWORD = os.getenv('COLLIBRA_ADMIN_PW')
 
@@ -248,7 +248,25 @@ def get_user_id(username):
     except Exception as e:
         return {"error": f"Error retrieving user ID: {str(e)}"}
 
-def assign_steward(asset_id, steward_user_id):
+def get_role_id(role_name):
+    api_url = f'{COLLIBRA_BASE_URL}/roles?name={role_name}'
+    try:
+        response = requests.get(api_url, auth=(USERNAME, PASSWORD))
+        if response.status_code == 200:
+            data = response.json()
+            if data and 'results' in data and len(data['results']) > 0:
+                return data['results'][0]['id']
+            return {"error": f"Role '{role_name}' not found"}
+        else:
+            return {
+                "error": f"Failed to retrieve role ID. Status code: {response.status_code}",
+                "status_code": response.status_code,
+                "response": response.text
+            }
+    except Exception as e:
+        return {"error": f"Error retrieving role ID: {str(e)}"}
+
+def assign_steward(asset_id, steward_user_id, role_id):
     """
     Assigns a Data Steward to an asset.
     
