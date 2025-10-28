@@ -7,8 +7,8 @@ import base64
 
 # Module-level configuration - available to all functions
 COLLIBRA_BASE_URL = 'https://<YOUR COLLIBRA INSTANCE>/rest/2.0'
-USERNAME = os.getenv('COLLIBRA_ADMIN_USN')
-PASSWORD = os.getenv('COLLIBRA_ADMIN_PW')
+USERNAME = os.getenv('COLLIBRA_USN')
+PASSWORD = os.getenv('COLLIBRA_PW')
 
 def get_collibra_assets(domain_id):
     """
