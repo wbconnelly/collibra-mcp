@@ -141,13 +141,15 @@ def get_user_id(
 @mcp.tool()
 def assign_steward(
     asset_id: Annotated[str, "The ID of the asset to assign a steward to"],
-    steward_user_id: Annotated[str, "The ID of the user to assign as steward"]
+    steward_user_id: Annotated[str, "The ID of the user to assign as steward"],
+    role_id: Annotated[str, "The ID of the role to assign as steward"],
+    resource_type: Annotated[str, "The type of the resource to assign a steward to"]
 ) -> str:
     """
     Assigns a Data Steward to an asset.
     """
     logger.info(f"Assigning steward {steward_user_id} to asset {asset_id}")
-    result = tools.assign_steward(asset_id, steward_user_id)
+    result = tools.assign_steward(asset_id, steward_user_id, role_id, resource_type)
     logger.info(f"Successfully assigned steward")
     return str(result)
 
@@ -161,6 +163,47 @@ def get_role_id(
     logger.info(f"Retrieving role ID for {role_name}")
     result = tools.get_role_id(role_name)
     logger.info(f"Successfully retrieved role ID")
+    return str(result)
+
+@mcp.tool()
+def get_asset_types():
+    """
+    Retrieves all asset types from Collibra.
+    """
+    logger.info(f"Retrieving all asset types")
+    result = tools.get_asset_types()
+    logger.info(f"Successfully retrieved all asset types")
+    return str(result)
+
+
+@mcp.tool()
+def get_relations(sourceAssetId, targetAssetId):
+    """
+    Retrieves all relations from Collibra.
+    """
+    logger.info(f"Retrieving all relations")
+    result = tools.get_relations(sourceAssetId, targetAssetId)
+    logger.info(f"Successfully retrieved all relations")
+    return str(result)
+
+@mcp.tool()
+def get_relation_types():
+    """
+    Retrieves all relation types from Collibra.
+    """
+    logger.info(f"Retrieving all relation types")
+    result = tools.get_relation_types()
+    logger.info(f"Successfully retrieved all relation types")
+    return str(result)
+
+@mcp.tool()
+def get_relation_type_id(relation_type_name):
+    """
+    Retrieves the relation type ID from Collibra by name.
+    """
+    logger.info(f"Retrieving relation type ID for {relation_type_name}")
+    result = tools.get_relation_type_id(relation_type_name)
+    logger.info(f"Successfully retrieved relation type ID")
     return str(result)
     
 def run_server():

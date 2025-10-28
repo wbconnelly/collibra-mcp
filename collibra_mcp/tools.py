@@ -266,7 +266,7 @@ def get_role_id(role_name):
     except Exception as e:
         return {"error": f"Error retrieving role ID: {str(e)}"}
 
-def assign_steward(asset_id, steward_user_id, role_id):
+def assign_steward(resource_id, steward_user_id, role_id, resource_type):
     """
     Assigns a Data Steward to an asset.
     
@@ -277,10 +277,12 @@ def assign_steward(asset_id, steward_user_id, role_id):
     Returns:
         Success message or error.
     """
-    api_url = f'{COLLIBRA_BASE_URL}/assets/{asset_id}/responsibilities'
+    api_url = f'{COLLIBRA_BASE_URL}/assets/{resource_id}/responsibilities'
     payload = {
-        "userId": steward_user_id,
-        "roleId": "00000000-0000-0000-0000-000000031041"  # Data Steward role ID
+        "userId": steward_user_id, # User ID to assign as steward
+        "roleId": role_id, # Data Steward role ID
+        "resourceId": resource_id, # Data Steward role ID
+        "resourceType": resource_type # ASSET, DOMAIN, COMMUNITY
     }
     
     try:
@@ -295,3 +297,49 @@ def assign_steward(asset_id, steward_user_id, role_id):
             }
     except Exception as e:
         return {"error": f"Error assigning steward: {str(e)}"}
+
+def get_asset_types(asset_type_public_id):
+    api_url = f'{COLLIBRA_BASE_URL}/assetTypes/publicId/{asset_type_public_id}'
+    try:
+        response = requests.get(api_url, auth=(USERNAME, PASSWORD))
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {
+                "error": f"Failed to retrieve asset types. Status code: {response.status_code}",
+                "status_code": response.status_code,
+                "response": response.text
+            }
+    except Exception as e:
+        return {"error": f"Error retrieving asset types: {str(e)}"}
+
+def get_relations(sourceAssetId, targetAssetId):
+    api_url = f'{COLLIBRA_BASE_URL}/relations?sourceAssetId={sourceAssetId}&targetAssetId={targetAssetId}'
+    try:
+        response = requests.get(api_url, auth=(USERNAME, PASSWORD))
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {
+                "error": f"Failed to retrieve relation types. Status code: {response.status_code}",
+                "status_code": response.status_code,
+                "response": response.text
+            }
+    except Exception as e:
+        return {"error": f"Error retrieving relations: {str(e)}"}
+
+def get_relation_types(relationTypeId):
+    api_url = f'{COLLIBRA_BASE_URL}/relationTypes/publicId/{relationTypeId}'
+    
+    try:
+        response = requests.get(api_url, auth=(USERNAME, PASSWORD))
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {
+                "error": f"Failed to retrieve relationship types. Status code: {response.status_code}",
+                "status_code": response.status_code,
+                "response": response.text
+            }
+    except Exception as e:
+        return {"error": f"Error retrieving relationship types: {str(e)}"}
