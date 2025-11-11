@@ -2,7 +2,7 @@ import logging
 from typing import Annotated
 from mcp.server.fastmcp import FastMCP
 from collibra_mcp import tools
-
+from collibra_mcp import search_tools
 # Configure logging
 logging.basicConfig(
     level=logging.WARNING,
@@ -140,16 +140,16 @@ def get_user_id(
 
 @mcp.tool()
 def assign_steward(
-    asset_id: Annotated[str, "The ID of the asset to assign a steward to"],
-    steward_user_id: Annotated[str, "The ID of the user to assign as steward"],
+    resource_id: Annotated[str, "The ID of the resource to assign a steward to"],
+    owner_id: Annotated[str, "The ID of the user to assign as steward"],
     role_id: Annotated[str, "The ID of the role to assign as steward"],
     resource_type: Annotated[str, "The type of the resource to assign a steward to"]
 ) -> str:
     """
     Assigns a Data Steward to an asset.
     """
-    logger.info(f"Assigning steward {steward_user_id} to asset {asset_id}")
-    result = tools.assign_steward(asset_id, steward_user_id, role_id, resource_type)
+    logger.info(f"Assigning steward {owner_id} to resource {resource_id}")
+    result = tools.assign_steward(resource_id, owner_id, role_id, resource_type)
     logger.info(f"Successfully assigned steward")
     return str(result)
 
@@ -206,6 +206,16 @@ def get_relation_type_id(relation_type_name):
     logger.info(f"Successfully retrieved relation type ID")
     return str(result)
     
+@mcp.tool()
+def search_collibra_assets(keyword: Annotated[str, "The keyword to search for"], asset_type_id: Annotated[str, "The asset type ID to search for"]) -> str   :
+    """
+    Searches for assets in Collibra.
+    """
+    logger.info(f"Searching for assets with keyword {keyword} and asset type ID {asset_type_id}")
+    result = search_tools.search_collibra_assets(keyword, asset_type_id)
+    logger.info(f"Successfully searched for assets")
+    return str(result)
+
 def run_server():
     """Run the MCP server."""
     logger.info("Starting Collibra MCP server...")
