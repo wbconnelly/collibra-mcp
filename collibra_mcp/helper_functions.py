@@ -44,7 +44,7 @@ def mcp_get_request(api_url, success_status_codes=None, **kwargs):
         return {"error": f"Error making GET request: {str(e)}"}
 
 
-def make_post_request(api_url, payload=None, success_status_codes=None, **kwargs):
+def mcp_post_request(api_url, payload=None, success_status_codes=None, **kwargs):
     """
     Template function for making POST requests to Collibra API.
     
@@ -85,7 +85,7 @@ def make_post_request(api_url, payload=None, success_status_codes=None, **kwargs
         return {"error": f"Error making POST request: {str(e)}"}
 
 
-def make_put_request(api_url, payload=None, success_status_codes=None, **kwargs):
+def mcp_put_request(api_url, payload=None, success_status_codes=None, **kwargs):
     """
     Template function for making PUT requests to Collibra API.
     
@@ -126,7 +126,7 @@ def make_put_request(api_url, payload=None, success_status_codes=None, **kwargs)
         return {"error": f"Error making PUT request: {str(e)}"}
 
 
-def make_patch_request(api_url, payload=None, success_status_codes=None, **kwargs):
+def mcp_patch_request(api_url, payload=None, success_status_codes=None, **kwargs):
     """
     Template function for making PATCH requests to Collibra API.
     
@@ -167,7 +167,7 @@ def make_patch_request(api_url, payload=None, success_status_codes=None, **kwarg
         return {"error": f"Error making PATCH request: {str(e)}"}
 
 
-def make_delete_request(api_url, success_status_codes=None, **kwargs):
+def mcp_delete_request(api_url, success_status_codes=None, **kwargs):
     """
     Template function for making DELETE requests to Collibra API.
     

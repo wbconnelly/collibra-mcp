@@ -215,6 +215,16 @@ def search_collibra_assets(keyword: Annotated[str, "The keyword to search for"],
     result = search_tools.search_collibra_assets(keyword, asset_type_id)
     logger.info(f"Successfully searched for assets")
     return str(result)
+    
+@mcp.tool()
+def get_asset_attributes(assetId, typeIds):
+    """
+    Retrieves the asset attributes from Collibra.
+    """
+    logger.info(f"Retrieving asset attributes for asset {assetId} and type IDs {typeIds}")
+    result = tools.get_asset_attributes(assetId, typeIds)
+    logger.info(f"Successfully retrieved asset attributes")
+    return str(result)
 
 def run_server():
     """Run the MCP server."""
