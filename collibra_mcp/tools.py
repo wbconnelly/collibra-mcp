@@ -4,7 +4,8 @@ from collibra_mcp.config import COLLIBRA_BASE_URL
 from collibra_mcp.helper_functions import (
     mcp_get_request,
     mcp_post_request,
-)
+    mcp_patch_request
+    )
 
 def get_collibra_assets(domain_id):
     """
@@ -218,3 +219,28 @@ def get_relation_types(relationTypeId):
     api_url = f'{COLLIBRA_BASE_URL}/relationTypes/publicId/{relationTypeId}'
     
     return mcp_get_request(api_url)
+    
+def add_attribute(assetId, attributeTypeId, value):
+    api_url = f'{COLLIBRA_BASE_URL}/attributes'
+    payload = {
+        "assetId": assetId,
+        "attributeTypeId": attributeTypeId,
+        "value": value
+    }
+    return mcp_post_request(api_url, payload)
+
+def get_attribute_id(attribute_name):
+    api_url = f'{COLLIBRA_BASE_URL}/attributes?name={attribute_name}'
+    return mcp_get_request(api_url)
+
+def get_attributes(assetId, typeId):
+    api_url = f'{COLLIBRA_BASE_URL}/attributes?assetId={assetId}&typeIds={typeId}&page=0&size=100'
+    return mcp_get_request(api_url)
+
+def change_attribute(attributeId, value):
+    api_url = f'{COLLIBRA_BASE_URL}/attributes/{attributeId}'
+    payload = {
+    "id": attributeId,
+    "value": value
+    }
+    return mcp_patch_request(api_url, payload)

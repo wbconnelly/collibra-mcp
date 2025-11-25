@@ -217,13 +217,53 @@ def search_collibra_assets(keyword: Annotated[str, "The keyword to search for"],
     return str(result)
     
 @mcp.tool()
-def get_asset_attributes(assetId, typeIds):
+def get_attributes(assetId, typeId):
     """
     Retrieves the asset attributes from Collibra.
     """
-    logger.info(f"Retrieving asset attributes for asset {assetId} and type IDs {typeIds}")
-    result = tools.get_asset_attributes(assetId, typeIds)
+    logger.info(f"Retrieving asset attributes for asset {assetId} and type IDs {typeId}")
+    result = tools.get_attributes(assetId, typeId)
     logger.info(f"Successfully retrieved asset attributes")
+    return str(result)
+
+@mcp.tool()
+def add_attribute(assetId, attributeId, value):
+    """
+    Adds an attribute to an asset in Collibra.
+    """
+    logger.info(f"Adding attribute {attributeId} to asset {assetId} with value {value}")
+    result = tools.add_attribute(assetId, attributeId, value)
+    logger.info(f"Successfully added attribute")
+    return str(result)
+
+@mcp.tool()
+def change_attribute(attributeId, value):
+    """
+    Changes an attribute value in Collibra.
+    """
+    logger.info(f"Changing attribute {attributeId} value to {value}")
+    result = tools.change_attribute(attributeId, value)
+    logger.info(f"Successfully changed attribute")
+    return str(result)
+
+@mcp.tool()
+def get_attribute_id(attribute_name):
+    """
+    Retrieves the attribute ID from Collibra by name.
+    """
+    logger.info(f"Retrieving attribute ID for {attribute_name}")
+    result = tools.get_attribute_id(attribute_name)
+    logger.info(f"Successfully retrieved attribute ID")
+    return str(result)
+
+@mcp.tool()
+def get_attribute(assetId, typeIds):
+    """
+    Retrieves the attributes from an asset in Collibra.
+    """
+    logger.info(f"Retrieving attributes for asset {assetId} and type IDs {typeIds}")
+    result = tools.get_attributes(assetId, typeIds)
+    logger.info(f"Successfully retrieved attributes")
     return str(result)
 
 def run_server():
